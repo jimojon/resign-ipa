@@ -51,8 +51,8 @@ echo ${ENTITLEMENTS} > ${TEMP}/entitlements.temp
 echo "Re-sign"
 /usr/bin/codesign -f -s "${CERTIFICATE_TYPE}: ${CERTIFICATE_NAME}" --identifier "${APP_ID}" --entitlements "${TEMP}/entitlements.temp" --resource-rules "${TEMP}/Payload/${APP_NAME}.app/ResourceRules.plist" "${TEMP}/Payload/${APP_NAME}.app"
 
-echo "Show entitlements"
-/usr/bin/codesign -d --entitlements :- "${TEMP}/Payload/${APP_NAME}.app"
+#echo "Show entitlements"
+#/usr/bin/codesign -d --entitlements :- "${TEMP}/Payload/${APP_NAME}.app"
 
 #Re-package
 echo "Re-package"
