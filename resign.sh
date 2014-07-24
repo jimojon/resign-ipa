@@ -36,7 +36,7 @@ echo "Replace embedded mobile provisioning profile"
 cp "${ASSETS_PATH}${PROFILE_NAME}.mobileprovision" "${TEMP}/Payload/${APP_NAME}.app/embedded.mobileprovision"
 
 #Change BundleVersion
-/usr/libexec/PlistBuddy -c "Set CFBundleVersion ${BUNDLE_VERSION}" ${TEMP}/Payload/${APP_NAME}.app/Info.plist
+/usr/libexec/PlistBuddy -c "Set CFBundleVersion ${APP_VERSION}" ${TEMP}/Payload/${APP_NAME}.app/Info.plist
 
 #Change BundleIdentifier
 /usr/libexec/PlistBuddy -c "Set CFBundleIdentifier ${APP_ID}" ${TEMP}/Payload/${APP_NAME}.app/Info.plist
