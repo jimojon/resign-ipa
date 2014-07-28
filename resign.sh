@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #Conf file
-CONF=./sign_dev.conf
+CONF=./assets/fcf_dev.conf
 
 #Datetime
 NOW=$(date +"%Y%m%d_%s")
@@ -15,6 +15,12 @@ fi
 TEMP="temp"
 if [ -e ${TEMP} ]; then
   echo "ERROR : temp already exists!"
+  exit 1
+fi
+
+#Check app ID
+if [ -z ${APP_ID} ]; then
+  echo "ERROR : missing APP_ID!"
   exit 1
 fi
 
@@ -36,7 +42,14 @@ echo "Replace embedded mobile provisioning profile"
 cp "${ASSETS_PATH}${PROFILE_NAME}.mobileprovision" "${TEMP}/Payload/${APP_NAME}.app/embedded.mobileprovision"
 
 #Change BundleVersion
-/usr/libexec/PlistBuddy -c "Set CFBundleVersion ${APP_VERSION}" ${TEMP}/Payload/${APP_NAME}.app/Info.plist
+if [ ! -z ${APP_BUNDLE_VERSION} ]; then
+    /usr/libexec/PlistBuddy -c "Set CFBundleVersion ${APP_BUNDLE_VERSION}" ${TEMP}/Payload/${APP_NAME}.app/Info.plist
+fi
+
+#Change CFBundleShortVersionString
+if [ ! -z ${APP_BUNDLE_SHORT_VERSION_STRING} ]; then
+    /usr/libexec/PlistBuddy -c "Set CFBundleShortVersionString ${APP_BUNDLE_SHORT_VERSION_STRING}" ${TEMP}/Payload/${APP_NAME}.app/Info.plist
+fi
 
 #Change BundleIdentifier
 /usr/libexec/PlistBuddy -c "Set CFBundleIdentifier ${APP_ID}" ${TEMP}/Payload/${APP_NAME}.app/Info.plist
